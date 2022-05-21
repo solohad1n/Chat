@@ -13,10 +13,18 @@ const showForm = ref(true)
     <div v-if="showForm">
       <h2>Sign Up</h2>
       <SignUpForm/>
+        <p>
+        Already registered?
+        <span @click="showForm = false">Login</span> instead.
+      </p>
     </div>
     <div v-else>
       <h2>Login</h2>
       <Login/>
+        <p>
+        No account yet?
+        <span @click="showForm = true">Sign Up</span> instead.
+      </p>
     </div>
   </div>
 </template>
