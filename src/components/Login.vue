@@ -1,3 +1,23 @@
+<script setup>
+  import { ref } from "@vue/reactivity";
+  import useLogin from "../composables/useLogin";
+  const email = ref("");
+  const password = ref("");
+
+  const handleSubmit = async () => {
+  console.log({
+    email:email.value,
+    password:password.value,
+  })
+  const {error,login} = useLogin()
+  await login(email.value,password.value)
+
+  if(error){
+    console.log(error)
+  }
+}
+</script>
+
 <template>
 	<form @submit.prevent="handleSubmit">
 		<input v-model="email" type="email" required placeholder="Email" />
@@ -5,19 +25,6 @@
 		<button>Log In</button>
 	</form>
 </template>
-
-<script setup>
-  import { ref } from "@vue/reactivity";
-  const email = ref("");
-  const password = ref("");
-
-  const handleSubmit = () => {
-  console.log({
-    email:email.value,
-    password:password.value,
-  })
-}
-</script>
 
 <style>
 
