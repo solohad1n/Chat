@@ -2,9 +2,15 @@
 import SignUpForm from "../components/SignUp.vue";
 import Login from "../components/Login.vue";
 import { ref } from "@vue/reactivity";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 
-const showForm = ref(true)
+const enterChat = () => {
+  router.push('/chatroom')
+}
+
+const showForm = ref(false)
 </script>
 
 <template>
@@ -20,7 +26,7 @@ const showForm = ref(true)
     </div>
     <div v-else>
       <h2>Login</h2>
-      <Login/>
+      <Login @successLogin="enterChat"/>
         <p>
         No account yet?
         <span @click="showForm = true">Sign Up</span> instead.

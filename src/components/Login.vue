@@ -4,16 +4,17 @@
   const email = ref("");
   const password = ref("");
 
+  const successLogin = defineEmits(['successLogin'])
+
   const handleSubmit = async () => {
-  console.log({
-    email:email.value,
-    password:password.value,
-  })
   const {error,login} = useLogin()
   await login(email.value,password.value)
 
-  if(error){
-    console.log(error)
+  if(!error.value){
+    successLogin('successLogin')
+  }
+  else{
+    console.log(error.value)
   }
 }
 </script>

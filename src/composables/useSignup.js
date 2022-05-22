@@ -6,7 +6,7 @@ export const signup = async (email, password, name) => {
   const error = ref(null)
 
   try {
-    const user = await createUserWithEmailAndPassword(auth, email, password)
+    const response = await createUserWithEmailAndPassword(auth, email, password)
 
     await updateProfile(response.user, {
       displayName: name

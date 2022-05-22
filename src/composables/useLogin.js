@@ -9,11 +9,8 @@ const login = async (email, password) => {
   try {
     const response = await signInWithEmailAndPassword(auth, email, password)
     error.value = null
-
-    console.log(response)
     return response
   } catch (err) {
-    console.log(err.message)
     error.value = err.message
   }
 }
