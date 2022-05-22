@@ -1,9 +1,12 @@
 <template>
   <p>Chatroom</p>
+  <div class="container">
+  <Navbar />
+  </div>
 </template>
 
-<script>
-
+<script setup>
+import Navbar from "../components/Navbar.vue";
 </script>
 
 <style>

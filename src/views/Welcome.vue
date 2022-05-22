@@ -18,7 +18,7 @@ const showForm = ref(false)
     <p>Welcome</p>
     <div v-if="showForm">
       <h2>Sign Up</h2>
-      <SignUpForm/>
+      <SignUpForm @successSignup="enterChat"/>
         <p>
         Already registered?
         <span @click="showForm = false">Login</span> instead.

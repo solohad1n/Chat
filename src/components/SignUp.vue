@@ -6,10 +6,15 @@ const name = ref('');
 const email = ref('');
 const password = ref('');
 
-const handleSubmit = async () => {
-  await signup(email.value,password.value,name.value)
+const successSignup = defineEmits(['successSignup'])
 
-  if(error){
+const handleSubmit = async () => {
+  const {error} = await signup(email.value,password.value,name.value)
+
+  if(!error.value){
+    successSignup('successSignup')
+  }
+  else{
     console.log(error.value)
   }
 }
