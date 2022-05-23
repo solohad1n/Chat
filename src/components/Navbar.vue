@@ -1,14 +1,37 @@
 <template>
 	<nav>
-		<div>
-			<p>Добро Пожаловать</p>
-			<p class="email">Вы вошли в аккаунт с почтой</p>
+		<div v-if="user">
+			<p>Добро Пожаловать {{ user.displayName }}</p>
+			<p class="email">Вы вошли в аккаунт с почтой {{ user.email }}</p>
 		</div>
-		<button>Выйти</button>
+		<button @click="handleClickLogout">Выйти</button>
 	</nav>
 </template>
 
 <script setup>
+
+import { watchEffect } from '@vue/runtime-core';
+import { useRouter } from 'vue-router';
+import useLogout from '../composables/useLogout';
+import { user } from "../composables/useUser";
+
+const { error, logout } = useLogout();
+const router = useRouter();
+
+const handleClickLogout = async () => {
+	await logout();
+	if (!error.value) {
+		router.push("/");
+	} else {
+		console.log(error.value);
+	}
+};
+
+watchEffect(() => {
+	if (!user.value) {
+		router.push("/");
+	}
+}, user);
 
 </script>
 
