@@ -1,6 +1,6 @@
 import { ref } from "vue"
 import { firestore } from '../firebase/config'
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, getDocs } from 'firebase/firestore'
 
 
 
@@ -17,7 +17,27 @@ const useCollection = () => {
     }
     return { error }
   }
-  return { addDocument }
+
+  const getCollection = async () => {
+    const documents = ref([])
+    const error = ref(null)
+
+    try {
+      const collectionRef = collection(firestore, 'messages')
+      const response = await getDocs(collectionRef)
+
+      response.forEach(doc => {
+        documents.value.push({ ...doc.data(), id: doc.id })
+      })
+    }
+    catch (err) {
+      error.value = err.message
+    }
+    return { documents, error }
+  }
+
+
+  return { addDocument, getCollection }
 }
 
 export default useCollection
