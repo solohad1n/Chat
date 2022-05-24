@@ -1,6 +1,6 @@
 <template>
 	<div class="chat-window">
-		<div v-if="documents" class="messages">
+		<div :ref="(el) => (messages = el)" v-if="documents" class="messages">
 			<div v-for="doc in documents" :key="doc.id">
 				<span class="created-at">{{ doc.createdAt?.toDate() }}</span>
 				<span class="name">{{ doc.name }}</span>
@@ -12,7 +12,17 @@
 </template>
 
 <script setup>
+import { ref } from "@vue/reactivity";
+import { onUpdated } from "@vue/runtime-core";
 import getCollection from "../composables/getCollection";
+
+const messages = ref(null);
+
+onUpdated(() => {
+  messages.value.scrollTop = messages.value.scrollHeight;
+
+
+});
 
 const {documents} = getCollection('messages')
 
