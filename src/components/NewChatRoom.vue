@@ -12,6 +12,7 @@
 import { ref } from "@vue/reactivity";
 import { user } from "../composables/useUser";
 import { timestamp } from "../firebase/config";
+import useCollection from "../composables/useCollection";
 
 const message = ref("");
 
@@ -24,7 +25,7 @@ const handleSubmitMessage = async () => {
 		createdAt: timestamp(),
 	};
 
- await addDoc(chat);
+	await addDoc(chat);
 
 	if (error.value) {
 		console.log(err.message);
