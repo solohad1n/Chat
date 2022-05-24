@@ -9,10 +9,9 @@
 </template>
 
 <script setup>
-
-import { watchEffect } from '@vue/runtime-core';
-import { useRouter } from 'vue-router';
-import useLogout from '../composables/useLogout';
+import { watchEffect } from "@vue/runtime-core";
+import { useRouter } from "vue-router";
+import useLogout from "../composables/useLogout";
 import { user } from "../composables/useUser";
 
 const { error, logout } = useLogout();
@@ -20,6 +19,7 @@ const router = useRouter();
 
 const handleClickLogout = async () => {
 	await logout();
+
 	if (!error.value) {
 		router.push("/");
 	} else {
@@ -32,7 +32,6 @@ watchEffect(() => {
 		router.push("/");
 	}
 }, user);
-
 </script>
 
 <style>

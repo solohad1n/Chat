@@ -1,6 +1,6 @@
 import { ref } from "vue"
 import { firestore } from '../firebase/config'
-import { collection, addDoc, getDocs, orderBy, query } from 'firebase/firestore'
+import { collection, addDoc, getDocs, orderBy, query, onSnapshot } from 'firebase/firestore'
 
 
 
@@ -24,11 +24,12 @@ const useCollection = () => {
 
     try {
       const collectionRef = query(collection(firestore, 'messages'), orderBy('createdAt', 'asc'))
-      const response = await getDocs(collectionRef)
-
-      response.forEach(doc => {
-        documents.value.push({ ...doc.data(), id: doc.id })
+      onSnapshot(collectionRef, (response) => {
+        documents.value = response.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id }
+        })
       })
+
     }
     catch (err) {
       error.value = err.message

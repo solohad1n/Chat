@@ -1,6 +1,6 @@
-import { auth } from "../firebase/config";
-import { ref } from "vue";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from '../firebase/config'
+import { ref } from 'vue'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 
 export const signup = async (email, password, name) => {
   const error = ref(null)
@@ -12,7 +12,8 @@ export const signup = async (email, password, name) => {
       displayName: name
     })
   } catch (err) {
-    error.value = err.massage
+    error.value = err.message
   }
+
   return { error }
 }

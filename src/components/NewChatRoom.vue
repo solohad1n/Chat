@@ -22,10 +22,10 @@ const handleSubmitMessage = async () => {
 	const chat = {
 		name: user.value.displayName,
 		message: message.value,
-		createdAt: timestamp,
+		createdAt: timestamp(),
 	};
 
-	const {error} = await addDocument(chat);
+	const { error } = await addDocument(chat);
 
 	if (error.value) {
 		console.log(err.message);

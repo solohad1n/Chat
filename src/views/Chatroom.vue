@@ -1,10 +1,9 @@
 <template>
-  <div class="container">
-  <Navbar />
-  <ChatWindow/>
-  <NewChatRoom/>
-
-  </div>
+	<div class="container">
+		<Navbar />
+		<ChatWindow />
+		<NewChatRoom />
+	</div>
 </template>
 
 <script setup>
@@ -14,5 +13,4 @@ import ChatWindow from "../components/ChatWindow.vue";
 </script>
 
 <style>
-
 </style>
