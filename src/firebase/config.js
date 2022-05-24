@@ -1,6 +1,6 @@
-import { initializeApp } from 'firebase/app'
-import { getFirestore, serverTimestamp } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEPJ6suf0OZoSHXcy1ScNjjrgQKrIMLVY",
@@ -11,8 +11,10 @@ const firebaseConfig = {
   appId: "1:208970783334:web:9b03f2249e55497301aba7"
 };
 
+firebase.initializeApp(firebaseConfig)
 
-const app = initializeApp(firebaseConfig)
-export const firestore = getFirestore(app)
-export const auth = getAuth(app)
-export const timestamp = serverTimestamp
+const auth = firebase.auth()
+const firestore = firebase.firestore()
+const timestamp = firebase.firestore.FieldValue.serverTimestamp
+
+export { firestore, timestamp, auth }

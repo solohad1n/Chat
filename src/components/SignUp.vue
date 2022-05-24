@@ -1,6 +1,8 @@
 <script setup>
 import {ref} from '@vue/reactivity'
-import { signup } from '../composables/useSignup';
+import useSignup from '../composables/useSignup';
+
+const {signup,error} = useSignup();
 
 const name = ref('');
 const email = ref('');
@@ -9,7 +11,7 @@ const password = ref('');
 const successSignup = defineEmits(['successSignup'])
 
 const handleSubmit = async () => {
-  const {error} = await signup(email.value,password.value,name.value)
+await signup(email.value,password.value,name.value)
 
   if(!error.value){
     successSignup('successSignup')

@@ -1,44 +1,20 @@
-import { ref } from "vue"
-import { firestore } from '../firebase/config'
-import { collection, addDoc, getDocs, orderBy, query, onSnapshot } from 'firebase/firestore'
+import { ref } from 'vue'
+import { firestore } from '@/firebase/config'
 
+const useCollection = (collection) => {
+  const error = ref(null)
 
-
-const useCollection = () => {
-  const addDocument = async (newDocument) => {
-    const error = ref(null)
+  const addDoc = async (doc) => {
+    error.value = null
     try {
-      const collectionRef = collection(firestore, 'messages')
-      await addDoc(collectionRef, newDocument)
-      error.value = null
+      await firestore.collection(collection).add(doc)
+    } catch (err) {
+      console.log(err.message)
+      err.value = 'Произошла ошибка во время отправки сообщения'
     }
-    catch (err) {
-      error.value = err.message
-    }
-    return { error }
   }
 
-  const getCollection = async () => {
-    const documents = ref([])
-    const error = ref(null)
-
-    try {
-      const collectionRef = query(collection(firestore, 'messages'), orderBy('createdAt', 'asc'))
-      onSnapshot(collectionRef, (response) => {
-        documents.value = response.docs.map((doc) => {
-          return { ...doc.data(), id: doc.id }
-        })
-      })
-
-    }
-    catch (err) {
-      error.value = err.message
-    }
-    return { documents, error }
-  }
-
-
-  return { addDocument, getCollection }
+  return { addDoc, error }
 }
 
 export default useCollection

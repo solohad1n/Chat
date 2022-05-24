@@ -1,19 +1,29 @@
-import { auth } from '../firebase/config'
 import { ref } from 'vue'
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { auth } from '@/firebase/config'
+const error = ref(null)
 
-export const signup = async (email, password, name) => {
-  const error = ref(null)
+const signup = async (email, password, name) => {
+  error.value = null
 
   try {
-    const response = await createUserWithEmailAndPassword(auth, email, password)
+    const response = await auth.createUserWithEmailAndPassword(email, password)
 
-    await updateProfile(response.user, {
-      displayName: name
-    })
+    if (!response) {
+      throw new Error('Невозможно провести регистрацию')
+    }
+
+    await response.user.updateProfile({ displayName: name })
+    error.value = null
+
+    return response
   } catch (err) {
+    console.log(err.message)
     error.value = err.message
   }
-
-  return { error }
 }
+
+const useSignup = () => {
+  return { error, signup }
+}
+
+export default useSignup

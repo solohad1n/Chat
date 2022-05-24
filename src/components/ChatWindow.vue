@@ -12,18 +12,11 @@
 </template>
 
 <script setup>
-import { ref } from "@vue/reactivity";
-import { watch } from "@vue/runtime-core";
-import useCollection from "../composables/useCollection";
+import getCollection from "../composables/getCollection";
 
-const { getCollection } = useCollection();
+const {documents} = getCollection('messages')
 
-const documents = ref([]);
 
-(async () => {
-	const { documents: docs } = await getCollection();
-	documents.value = docs.value;
-})();
 </script>
 
 <style scoped>

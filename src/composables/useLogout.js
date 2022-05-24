@@ -1,21 +1,20 @@
 import { ref } from 'vue'
-import { auth } from '../firebase/config'
-import { signOut } from 'firebase/auth'
+import { auth } from '@/firebase/config'
+
 const error = ref(null)
 
 const logout = async () => {
   error.value = null
-  try {
-    await signOut(auth)
-    error.value = null
 
+  try {
+    await auth.signOut()
   } catch (err) {
-    error.value = err.message
+    console.log(err)
   }
 }
 
 const useLogout = () => {
-  return { logout, error }
+  return { error, logout }
 }
 
 export default useLogout
