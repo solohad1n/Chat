@@ -1,10 +1,10 @@
 <template>
 	<div class="chat-window">
 		<div :ref="(el) => (messages = el)" v-if="documents" class="messages">
-			<div v-for="doc in documents" :key="doc.id">
-				<span class="created-at">{{ doc.createdAt?.toDate() }}</span>
+			<div v-for="doc in formattedDocuments" :key="doc.id">
 				<span class="name">{{ doc.name }}</span>
 				<span class="message">{{ doc.message }}</span>
+        <span class="created-at">{{ doc.createdAt }}</span>
 			</div>
 		</div>
 		<div v-else>Some problem</div>
@@ -13,19 +13,26 @@
 
 <script setup>
 import { ref } from "@vue/reactivity";
-import { onUpdated } from "@vue/runtime-core";
+import { formatDistanceToNow } from "date-fns";
+import { computed, onUpdated } from "@vue/runtime-core";
 import getCollection from "../composables/getCollection";
+import {ru} from 'date-fns/locale'
 
+const {documents} = getCollection('messages')
 const messages = ref(null);
 
 onUpdated(() => {
   messages.value.scrollTop = messages.value.scrollHeight;
-
-
 });
 
-const {documents} = getCollection('messages')
-
+const formattedDocuments = computed(() => {
+  if (documents.value) {
+    return documents.value.map((doc) => {
+      const time = formatDistanceToNow(doc.createdAt.toDate(),{locale: ru});
+      return { ...doc, createdAt: time };
+    });
+  }
+});
 
 </script>
 
@@ -40,8 +47,8 @@ const {documents} = getCollection('messages')
 .created-at {
 	display: block;
 	color: #999;
-	font-size: 12px;
-	margin-bottom: 4px;
+	font-size: 9px;
+	margin-bottom: 6px;
 }
 .name {
 	font-weight: bold;
