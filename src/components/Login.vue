@@ -39,4 +39,7 @@ const handleSubmit = async () => {
 </template>
 
 <style>
+input{
+	height: 50%;
+}
 </style>

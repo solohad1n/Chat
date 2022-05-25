@@ -20,6 +20,7 @@ const { addDoc, error } = useCollection('messages');
 
 const handleSubmitMessage = async () => {
 	const chat = {
+		userId: user.value.uid, 
 		name: user.value.displayName,
 		message: message.value,
 		createdAt: timestamp(),
