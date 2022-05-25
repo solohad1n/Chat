@@ -7,6 +7,7 @@ const {signup,error} = useSignup();
 const name = ref('');
 const email = ref('');
 const password = ref('');
+// const avatar = ref(null);
 
 const successSignup = defineEmits(['successSignup'])
 
@@ -21,6 +22,10 @@ await signup(email.value,password.value,name.value)
   }
 }
 
+// const handleChangeFile = (event) => {
+//   avatar.value = event.target.files[0];
+// }
+
 </script>
 
 <template>
@@ -28,6 +33,7 @@ await signup(email.value,password.value,name.value)
     <input v-model="name" type="text" required placeholder="Name" />
     <input v-model="email" type="email" required placeholder="Email" />
     <input v-model="password" type="password" required placeholder="Password" />
+    <input type="file" @change="handleChangeFile"/>
     <button>Sign Up</button>
   </form>
 </template>

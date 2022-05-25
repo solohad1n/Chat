@@ -5,6 +5,16 @@ const email = ref("");
 const password = ref("");
 
 const successLogin = defineEmits(['successLogin'])
+// const props = defineProps({
+// 	name: {
+// 		type: String,
+// 	},
+// 	age: {
+// 		type: Number,
+// 	}
+// });
+
+// props.name
 
 const handleSubmit = async () => {
 	const { error, login } = useLogin();
