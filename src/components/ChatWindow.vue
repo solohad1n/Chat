@@ -1,13 +1,16 @@
 <template>
 	<div class="chat-window">
 		<div :ref="(el) => (messages = el)" v-if="documents" class="messages">
-			<div v-for="doc in formattedDocuments" :key="doc.id">
-				<span class="name">{{ doc.name }}</span>
-				<span class="message">{{ doc.message }}</span>
-        <span class="created-at">{{ doc.createdAt }}</span>
+			<div class="chat__message" v-for="doc in formattedDocuments" :key="doc.id">
+				<img :src="doc.avatar" alt="">
+				<div>
+					<span class="name">{{ doc.name }}</span>
+					<span class="message">{{ doc.message }}</span>
+					<span class="created-at">{{ doc.createdAt }}</span>
+				</div>
 			</div>
 		</div>
-		<div v-else>Some problem</div>
+		<div v-else>Загрузка...</div>
 	</div>
 </template>
 
@@ -17,6 +20,8 @@ import { formatDistanceToNow } from "date-fns";
 import { computed, onUpdated } from "@vue/runtime-core";
 import getCollection from "../composables/getCollection";
 import {ru} from 'date-fns/locale'
+import ggg from '../assets/1231.jpg'
+import {user} from '../composables/useUser'
 
 const {documents} = getCollection('messages')
 const messages = ref(null);
@@ -57,5 +62,15 @@ const formattedDocuments = computed(() => {
 .messages {
 	max-height: 400px;
 	overflow: auto;
+}
+.chat-window img{
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+.chat__message{
+	display: flex;
+	margin-bottom: 10px;
 }
 </style>

@@ -23,6 +23,7 @@ const handleSubmitMessage = async () => {
 		name: user.value.displayName,
 		message: message.value,
 		createdAt: timestamp(),
+		avatar: user.value.photoURL,
 	};
 
 	await addDoc(chat);

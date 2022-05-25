@@ -1,18 +1,23 @@
 <script setup>
 import {ref} from '@vue/reactivity'
 import useSignup from '../composables/useSignup';
+import useStorage from '../composables/useStorage';
 
 const {signup,error} = useSignup();
+const { uploadImage } = useStorage();
 
 const name = ref('');
 const email = ref('');
 const password = ref('');
-// const avatar = ref(null);
+const avatar = ref(null);
 
 const successSignup = defineEmits(['successSignup'])
 
 const handleSubmit = async () => {
-await signup(email.value,password.value,name.value)
+await signup(email.value,password.value,name.value,avatar.value)
+
+await uploadImage(avatar.value)
+
 
   if(!error.value){
     successSignup('successSignup')
@@ -22,9 +27,9 @@ await signup(email.value,password.value,name.value)
   }
 }
 
-// const handleChangeFile = (event) => {
-//   avatar.value = event.target.files[0];
-// }
+const handleChangeFile = (event) => {
+  avatar.value = event.target.files[0];
+}
 
 </script>
 
