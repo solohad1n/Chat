@@ -1,10 +1,10 @@
 <template>
 	<div class="chat-window">
 		<div :ref="(el) => (messages = el)" v-if="documents" class="messages">
-			<div class="chat__message" v-for="doc in formattedDocuments" :key="doc.id">
+			<div :class='{me:user.uid === doc.userId}' class="chat__message" v-for="doc in formattedDocuments" :key="doc.id">
 				<img :src="doc.avatar" alt="">
 				<div>
-					<span class="name">{{ doc.name }}</span>
+					<span v-if="user.uid !== doc.userId" class="name">{{ doc.name }}</span>
 					<span class="message">{{ doc.message }}</span>
 					<span class="created-at">{{ doc.createdAt }}</span>
 				</div>
@@ -68,6 +68,17 @@ const formattedDocuments = computed(() => {
 	height: 34px;
 	border-radius: 50%;
 	margin-right: 10px;
+}
+.me.chat__message{
+flex-flow:row-reverse ;
+}
+.me.chat__message img{
+	margin-right: 0;
+  margin-left: 10px;
+}
+.me.chat__message .created-at{
+	display: flex;
+	justify-content: flex-end;
 }
 .chat__message{
 	display: flex;
