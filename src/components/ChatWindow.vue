@@ -2,11 +2,21 @@
 	<div class="chat-window">
 		<div :ref="(el) => (messages = el)" v-if="documents" class="messages">
 			<div :class='{me:user.uid === doc.userId}' class="chat__message" v-for="doc in formattedDocuments" :key="doc.id">
-				<img :src="doc.avatar" alt="">
-				<div>
+				<img class="chat__avatar" :src="doc.avatar" alt="">
+				<div v-if="doc.message">
 					<span v-if="user.uid !== doc.userId" class="name">{{ doc.name }}</span>
 					<span class="message">{{ doc.message }}</span>
 					<span class="created-at">{{ doc.createdAt }}</span>
+				</div>
+				<div class="chat__image" 
+				:class='{me:user.uid === doc.userId}' 
+				v-else
+				>
+				<div>
+					<img :src="doc.image" alt="">
+					<span class="created-at">{{ doc.createdAt }}</span>
+				</div>
+					
 				</div>
 			</div>
 		</div>
@@ -20,8 +30,8 @@ import { formatDistanceToNow } from "date-fns";
 import { computed, onUpdated } from "@vue/runtime-core";
 import getCollection from "../composables/getCollection";
 import {ru} from 'date-fns/locale'
-import ggg from '../assets/1231.jpg'
 import {user} from '../composables/useUser'
+
 
 const {documents} = getCollection('messages')
 const messages = ref(null);
@@ -63,7 +73,7 @@ const formattedDocuments = computed(() => {
 	max-height: 400px;
 	overflow: auto;
 }
-.chat-window img{
+.chat__avatar{
 	width: 34px;
 	height: 34px;
 	border-radius: 50%;
@@ -83,5 +93,15 @@ flex-flow:row-reverse ;
 .chat__message{
 	display: flex;
 	margin-bottom: 10px;
+}
+.chat__image img{
+	max-width: 150px;
+	max-height: 150px;
+	object-fit: cover;
+	border-radius: 12px;
+}
+.chat__image.me{
+	display: flex;
+	justify-content: flex-end ;
 }
 </style>
